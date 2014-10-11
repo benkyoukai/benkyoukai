@@ -5,8 +5,8 @@ def merge_sort(nums, cmp=cmp):
 
     left_length = length / 2
     right_length = length - length / 2
-    left = merge_sort(nums[0: left_length])
-    right = merge_sort(nums[left_length:])
+    left = merge_sort(nums[0: left_length], cmp)
+    right = merge_sort(nums[left_length:], cmp)
     merged = []
 
     i, j = 0, 0
@@ -28,15 +28,16 @@ def merge_sort(nums, cmp=cmp):
 
     return merged
 
-# test
-import random
+if __name__ == "__main__":
+    # test
+    import random
 
-for i in range(10):
-    size = random.randrange(100)
-    t1 = random.sample(xrange(100), size)
-    assert merge_sort(t1) == sorted(t1)
+    for i in range(10):
+        size = random.randrange(100)
+        t1 = random.sample(xrange(100), size)
+        assert merge_sort(t1) == sorted(t1)
 
-assert merge_sort([]) == []
-assert merge_sort([1]) == [1]
+    assert merge_sort([]) == []
+    assert merge_sort([1]) == [1]
 
-print "=> passed"
+    print "=> passed"
