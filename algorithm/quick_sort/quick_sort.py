@@ -1,5 +1,6 @@
 def qsort(array, cmp=cmp):
     """ Quick sort """
+
     def sort(start, end):
         def pivot_index():
             """ return pivot index """
@@ -61,7 +62,3 @@ if __name__ == "__main__":
         assert qsort(t) == expected, t
 
     print "=> passed"
-
-
-
-
