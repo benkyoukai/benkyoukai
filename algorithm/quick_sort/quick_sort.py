@@ -29,9 +29,7 @@ def qsort(array, cmp=cmp):
 
         def swap(i, j):
             """ swap two elements by index """
-            t = array[i]
-            array[i] = array[j]
-            array[j] = t
+            array[i], array[j] = array[j], array[i]
 
         # Base case.
         if start < 0 or start >= end: return
