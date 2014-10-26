@@ -1,10 +1,13 @@
+import random
+
+
 def qsort(array, cmp=cmp):
     """ Quick sort """
 
     def sort(start, end):
         def pivot_index():
             """ return pivot index """
-            return start
+            return random.randint(start, end)
 
         def partition():
             """
@@ -51,7 +54,6 @@ def qsort(array, cmp=cmp):
 
 
 if __name__ == "__main__":
-    import random
 
     expected = list(range(0, 100))
     for i in range(1, 100):
