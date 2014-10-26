@@ -3,7 +3,7 @@ import random
 
 
 def randomized_select(array, index, cmp=cmp):
-    """ select element from array using O(n) time"""
+    """ select the nth smallest element """
     # input array should be duplicated first.
     return rselect(list(array), index, cmp)
 
