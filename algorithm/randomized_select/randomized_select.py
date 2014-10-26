@@ -49,7 +49,7 @@ def rselect(array, index, cmp=cmp):
         # partiioning
         mid = partition()
 
-        # Find the element
+        # Found the element.
         if mid == index: return array[index]
         # search in right hand side
         elif mid < index: return select_between(mid + 1, end)
