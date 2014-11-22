@@ -2,7 +2,7 @@ from collections import defaultdict
 
 
 class Vertex:
-    def __init__(self, vid, value):
+    def __init__(self, vid, value=None):
         self.vid = vid
         self.value = value
 
@@ -152,18 +152,18 @@ if __name__ == "__main__":
     # A-----B------C
     # |     |      |
     # +-----D------E
-    a = Vertex(1, "a")
-    b = Vertex(2, "b")
-    c = Vertex(3, "c")
-    d = Vertex(4, "d")
-    e = Vertex(5, "e")
+    a = Vertex(1)
+    b = Vertex(2)
+    c = Vertex(3)
+    d = Vertex(4)
+    e = Vertex(5)
     edges = [
         [a, b],
         [a, d],
         [b, c],
         [b, d],
         [d, e],
-        [c, e]
+        [c, e],
     ]
     g = Graph(edges)
 
