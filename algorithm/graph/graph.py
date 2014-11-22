@@ -12,14 +12,14 @@ class Graph:
     Indirected Graph
     """
 
-    def __init__(self, es, vs=[]):
+    def __init__(self, edges=[], vertices=[]):
         self.vertices = {}
         self.alist = defaultdict(set)
 
-        for v in vs:
+        for v in vertices:
             self.add_vertex(v)
 
-        for e in es:
+        for e in edges:
             self.add_edge(e)
 
     def vertex(vid):
@@ -50,7 +50,7 @@ class Graph:
         Return self
         """
         v1, v2 = e
-        vid1, vid2 = self._id(v1), self._id(v2)
+        vid1, vid2 = _id(v1), _id(v2)
 
         if not self.has_vertex(vid1):
             self.add_vertex(v1)
@@ -70,7 +70,7 @@ class Graph:
 
         Return Bool
         """
-        vid = self._id(v)
+        vid = _id(v)
         return self.vertices.has_key(vid)
 
     def adjacent(self, v1, v2):
@@ -82,7 +82,7 @@ class Graph:
 
         Return Bool
         """
-        vid1, vid2 = self._id(v1), self._id(v2)
+        vid1, vid2 = _id(v1), _id(v2)
         return vid2 in self.alist[vid1]
 
     def neighbors(self, v):
@@ -93,53 +93,50 @@ class Graph:
 
         Return A set of Vertex#id
         """
-        vid = self._id(v)
+        vid = _id(v)
         return self.alist[vid]
 
-    def _id(self, v):
-        if isinstance(v, Vertex):
-            v = v.vid
-        return v
+
+def _id(v):
+    if isinstance(v, Vertex):
+        v = v.vid
+    return v
 
 
 def shortest(g, v1, v2):
     """
     BFS find shortest path from v1 to v2
 
-    g  - graph
-    v1 - vertex
-    v2 - vertex
+    g  - Graph
+    v1 - Vertex|Vertex#id
+    v2 - Vertex|Vertex#id
 
     Return Int|None  number of steps from v1 to v2.
                      Or none if no such path.
     """
 
+    vid1, vid2 = _id(v1), _id(v2)
     visited = set()
-
-    def next_level_vertices(vs):
-        vids = []
-        for v in vs:
-            vids.extend(g.neighbors(v))
-        vids = set(vids)
-
-        return [vid for vid in vids if vid not in visited]
-
     found = False
     level = 0
-    froms = [v1.vid]
+    layer = [vid1]
 
-    while froms and (not found):
+    while layer and (not found):
         level += 1
 
         # check this layer
-        for vid in froms:
+        for vid in layer:
             visited.add(vid)
-            if g.adjacent(vid, v2):
+            if g.adjacent(vid, vid2):
                 found = True
                 break
 
         # goto next layer
-        froms = next_level_vertices(froms)
+        vids = []
+        for v in layer:
+            vids.extend(g.neighbors(v))
+        vids = set(vids)
+        layer = [vid for vid in vids if vid not in visited]
 
     if found:
         return level
@@ -165,7 +162,7 @@ if __name__ == "__main__":
         [d, e],
         [c, e],
     ]
-    g = Graph(edges)
+    g = Graph(edges=edges)
 
     print shortest(g, a, c) == 2
     print shortest(g, a, e) == 2
