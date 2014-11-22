@@ -8,6 +8,10 @@ class Vertex:
 
 
 class Graph:
+    """
+    Indirected Graph
+    """
+
     def __init__(self, es, vs=[]):
         self.vertices = {}
         self.alist = defaultdict(set)
