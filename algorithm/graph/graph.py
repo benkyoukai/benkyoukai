@@ -5,21 +5,12 @@ class Vertex:
     def __init__(self, vid, value):
         self.vid = vid
         self.value = value
-        self.meta = {}
-
-    def visit(self):
-        self.meta["visited"] = True
-
-    def visited(self):
-        if self.meta.has_key("visited"):
-            return self.meta["visited"]
-        return False
 
 
 class Graph:
     def __init__(self, es, vs=[]):
         self.vertices = {}
-        self.alist = defaultdict(list)
+        self.alist = defaultdict(set)
 
         for v in vs:
             self.add_vertex(v)
@@ -27,29 +18,84 @@ class Graph:
         for e in es:
             self.add_edge(e)
 
+    def vertex(vid):
+        """ Get vertex by vid """
+        self.vertices[vid]
+
     def add_vertex(self, v):
+        """
+        Add vertex to graph
+
+        v - Vertex. Raise exception if v is not a Vertex object
+
+        Return self
+        """
+        if not isinstance(v, Vertex):
+            raise "Cannot add non-Vertex object to Graph"
         self.vertices[v.vid] = v
+        return self
 
     def add_edge(self, e):
+        """
+        Add edge to graph
+
+        e - [Vertex|Vertex#id, Vertex|Vertex#id]
+            If vertex dose not exists, add vertex object to graph.
+            Raise Exception when Vertex#id is passed and there is no such vertex.
+
+        Return self
+        """
         v1, v2 = e
-        if not self.has_vertex(v1): self.add_vertex(v1)
-        if not self.has_vertex(v2): self.add_vertex(v2)
-        self.alist[v1.vid].append(v2.vid)
-        self.alist[v2.vid].append(v1.vid)
+        vid1, vid2 = self._id(v1), self._id(v2)
+
+        if not self.has_vertex(vid1):
+            self.add_vertex(v1)
+
+        if not self.has_vertex(vid2):
+            self.add_vertex(v2)
+
+        self.alist[vid1].add(vid2)
+        self.alist[vid2].add(vid1)
+        return self
 
     def has_vertex(self, v):
-        return self.vertices.has_key(v.vid)
+        """
+        Check if vertex exists
 
-    def neighbors(self, v):
-        return [self.vertices[vid] for vid in self.alist[v.vid]]
+        v - Vertex|Vertex#id
+
+        Return Bool
+        """
+        vid = self._id(v)
+        return self.vertices.has_key(vid)
 
     def adjacent(self, v1, v2):
-        return v2.vid in self.alist[v1.vid]
+        """
+        Check if two vertices is adjacent
 
+        v1 - Vertex|Vertex#id
+        v2 - Vertex|Vertex#id
 
-def reset_node_status(g):
-    for v in g.vertices.values():
-        v.meta = {}
+        Return Bool
+        """
+        vid1, vid2 = self._id(v1), self._id(v2)
+        return vid2 in self.alist[vid1]
+
+    def neighbors(self, v):
+        """
+        Get adjacent vertex ids
+
+        v - Vertex|Vertex#id
+
+        Return A set of Vertex#id
+        """
+        vid = self._id(v)
+        return self.alist[vid]
+
+    def _id(self, v):
+        if isinstance(v, Vertex):
+            v = v.vid
+        return v
 
 
 def shortest(g, v1, v2):
@@ -64,32 +110,33 @@ def shortest(g, v1, v2):
                      Or none if no such path.
     """
 
-    def next_level_vertices(vs):
-        nvs = []
-        for v in vs:
-            nvs.extend(g.neighbors(v))
-        nvs = set(nvs)
+    visited = set()
 
-        return [v for v in nvs if not v.visited()]
+    def next_level_vertices(vs):
+        vids = []
+        for v in vs:
+            vids.extend(g.neighbors(v))
+        vids = set(vids)
+
+        return [vid for vid in vids if vid not in visited]
 
     found = False
     level = 0
-    froms = [v1]
+    froms = [v1.vid]
 
     while froms and (not found):
         level += 1
 
         # check this layer
-        for v in froms:
-            v.visit()
-            if g.adjacent(v, v2):
+        for vid in froms:
+            visited.add(vid)
+            if g.adjacent(vid, v2):
                 found = True
                 break
 
         # goto next layer
         froms = next_level_vertices(froms)
 
-    reset_node_status(g)
     if found:
         return level
 
@@ -101,7 +148,6 @@ if __name__ == "__main__":
     # A-----B------C
     # |     |      |
     # +-----D------E
-
     a = Vertex(1, "a")
     b = Vertex(2, "b")
     c = Vertex(3, "c")
