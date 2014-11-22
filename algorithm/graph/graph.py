@@ -12,7 +12,7 @@ class Graph:
     Indirected Graph
     """
 
-    def __init__(self, edges=[], vertices=[]):
+    def __init__(self, vertices=[], edges=[]):
         self.vertices = {}
         self.alist = defaultdict(set)
 
