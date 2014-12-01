@@ -23,7 +23,7 @@ def topological_sort(graph):
         vids = graph.neighbors(v)
         for vid in vids:
             if vid not in visited:
-                DFS(graph.vertex(vid))
+                DFS(graph.getvertex(vid))
 
         v.value = curval[0]
         curval[0] -= 1
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             ns = graph.neighbors(v)
             lists = []
             for vid in ns:
-                lists += DFS(graph.vertex(vid))
+                lists += DFS(graph.getvertex(vid))
 
             if not lists:
                 return [[(v.vid, v.value)]]

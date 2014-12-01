@@ -14,19 +14,22 @@ class Graph:
 
     def __init__(self, vertices=[], edges=[]):
         self.vertices = {}
-        self.alist = defaultdict(set)
+        self.edges = defaultdict(dict)
 
         for v in vertices:
-            self.add_vertex(v)
+            self.addvertex(v)
 
         for e in edges:
-            self.add_edge(e)
+            self.addedge(e)
 
-    def vertex(self, vid):
+    def getvertex(self, vid):
         """ Get vertex by vid """
         return self.vertices[vid]
 
-    def add_vertex(self, v):
+    def getvertices(self):
+        return self.vertices.value()
+
+    def addvertex(self, v):
         """
         Add vertex to graph
 
@@ -39,7 +42,7 @@ class Graph:
         self.vertices[v.vid] = v
         return self
 
-    def add_edge(self, e):
+    def addedge(self, e):
         """
         Add edge to graph
 
@@ -52,17 +55,17 @@ class Graph:
         v1, v2 = e
         vid1, vid2 = getid(v1), getid(v2)
 
-        if not self.has_vertex(vid1):
-            self.add_vertex(v1)
+        if not self.hasvertex(vid1):
+            self.addvertex(v1)
 
-        if not self.has_vertex(vid2):
-            self.add_vertex(v2)
+        if not self.hasvertex(vid2):
+            self.addvertex(v2)
 
-        self.alist[vid1].add(vid2)
-        self.alist[vid2].add(vid1)
+        self.edges[vid1][vid2] = True
+        self.edges[vid2][vid1] = True
         return self
 
-    def has_vertex(self, v):
+    def hasvertex(self, v):
         """
         Check if vertex exists
 
@@ -83,7 +86,7 @@ class Graph:
         Return Bool
         """
         vid1, vid2 = getid(v1), getid(v2)
-        return vid2 in self.alist[vid1]
+        return self.edges[vid1].has_key(vid2)
 
     def neighbors(self, v):
         """
@@ -91,10 +94,10 @@ class Graph:
 
         v - Vertex|Vertex#id
 
-        Return A set of Vertex#id
+        Return A list of Vertex#id
         """
         vid = getid(v)
-        return self.alist[vid]
+        return self.edges[vid].keys()
 
 
 def getid(v):
