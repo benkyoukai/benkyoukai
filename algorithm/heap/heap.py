@@ -9,7 +9,8 @@
 #   size()                       -> int
 #   value()                      -> list of elem
 #
-# The return value of compare(v1, v2) should be greater than 0.
+# If v1 is greater than v2,
+# the return value of compare(v1, v2) should be greater than 0.
 class Heap:
     def __init__(self, elems=[], cmp=cmp):
         self._elems = []
