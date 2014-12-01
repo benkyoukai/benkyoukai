@@ -27,7 +27,7 @@ class Graph:
         return self.vertices[vid]
 
     def getvertices(self):
-        return self.vertices.value()
+        return self.vertices.values()
 
     def addvertex(self, v):
         """

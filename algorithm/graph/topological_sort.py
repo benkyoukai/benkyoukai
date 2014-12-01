@@ -7,7 +7,7 @@ from directed_graph import Vertex
 from directed_graph import getid
 
 def topological_sort(graph):
-    vertices = graph.vertices.values()
+    vertices = graph.getvertices()
 
     # A dirty work around.
     #
