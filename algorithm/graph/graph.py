@@ -22,9 +22,9 @@ class Graph:
         for e in edges:
             self.add_edge(e)
 
-    def vertex(vid):
+    def vertex(self, vid):
         """ Get vertex by vid """
-        self.vertices[vid]
+        return self.vertices[vid]
 
     def add_vertex(self, v):
         """
@@ -50,7 +50,7 @@ class Graph:
         Return self
         """
         v1, v2 = e
-        vid1, vid2 = _id(v1), _id(v2)
+        vid1, vid2 = getid(v1), getid(v2)
 
         if not self.has_vertex(vid1):
             self.add_vertex(v1)
@@ -70,7 +70,7 @@ class Graph:
 
         Return Bool
         """
-        vid = _id(v)
+        vid = getid(v)
         return self.vertices.has_key(vid)
 
     def adjacent(self, v1, v2):
@@ -82,7 +82,7 @@ class Graph:
 
         Return Bool
         """
-        vid1, vid2 = _id(v1), _id(v2)
+        vid1, vid2 = getid(v1), getid(v2)
         return vid2 in self.alist[vid1]
 
     def neighbors(self, v):
@@ -93,11 +93,11 @@ class Graph:
 
         Return A set of Vertex#id
         """
-        vid = _id(v)
+        vid = getid(v)
         return self.alist[vid]
 
 
-def _id(v):
+def getid(v):
     if isinstance(v, Vertex):
         v = v.vid
     return v
@@ -115,7 +115,7 @@ def shortest(g, v1, v2):
                      Or none if no such path.
     """
 
-    vid1, vid2 = _id(v1), _id(v2)
+    vid1, vid2 = getid(v1), getid(v2)
     visited = set()
     found = False
     level = 0
