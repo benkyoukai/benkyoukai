@@ -3,11 +3,11 @@
 # API
 #
 #   Heap([elem...], compare=cmp) -> Heap
-#   insert(elem)                 -> Heap
-#   findmin(elem)                -> elem
-#   popmin(elem)                 -> elem
-#   size()                       -> int
-#   value()                      -> list of elem
+#   #insert(elem)                -> Heap
+#   #findmin()                   -> elem
+#   #popmin()                    -> elem
+#   #size()                      -> int
+#   #value()                     -> list of elem
 #
 # If v1 is greater than v2,
 # the return value of compare(v1, v2) should be greater than 0.
@@ -26,7 +26,7 @@ class Heap:
         self._siftup()
         return self
 
-    def findmin(self, el):
+    def findmin(self):
         return self._elems[0]
 
     def popmin(self):
