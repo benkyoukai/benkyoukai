@@ -20,6 +20,13 @@ class DirectedGraph(Graph):
 
 def topological_sort(graph):
     vertices = graph.vertices.values()
+
+    # A dirty work around.
+    #
+    # If curval is not mutable,
+    # its value cannot be reassigned(changed) in the nested function.
+    #
+    # For more info: http://stackoverflow.com/questions/6198709/how-do-i-change-nesting-functions-variable-in-the-nested-function
     curval = [len(vertices)]
     visited = set([])
 
