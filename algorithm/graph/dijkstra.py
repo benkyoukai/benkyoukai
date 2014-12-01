@@ -37,20 +37,37 @@ def dijkstra(graph, source, target):
 if __name__ == "__main__":
 
     #    2     4
-    # A----->B----->C
+    # A----->B----->D
     # |             ^
     # |  3          | 1
-    # +----->D------+
+    # +----->C------+
     A = Vertex("A")
     B = Vertex("B")
     C = Vertex("C")
     D = Vertex("D")
     edges = [
         (A, B, 2),
-        (A, D, 3),
-        (B, C, 4),
-        (D, C, 1),
+        (A, C, 3),
+        (B, D, 4),
+        (C, D, 1),
     ]
     graph = WeightedGraph(edges=edges)
-    print dijkstra(graph, A, D)
+    assert dijkstra(graph, A, D) == 4
+
+    #    2     4
+    # A----->B<-----D
+    # |             |
+    # |  3          | 1
+    # +----->C<-----+
+    edges2 = [
+        (A, B, 2),
+        (A, C, 3),
+        (D, B, 4),
+        (D, C, 1),
+    ]
+    graph2 = WeightedGraph(edges=edges2)
+    assert dijkstra(graph2, A, D) is None
+
+    print "=> Passed"
+
 
