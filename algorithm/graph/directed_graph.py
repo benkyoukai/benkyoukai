@@ -17,8 +17,3 @@ class DirectedGraph(Graph):
             self.add_vertex(v2)
 
         self.alist[vid1].add(vid2)
-
-
-
-
-

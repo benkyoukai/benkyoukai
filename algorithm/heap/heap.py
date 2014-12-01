@@ -96,4 +96,3 @@ if __name__ == "__main__":
     print h.value()
     h.popmin()
     print h.value()
-
