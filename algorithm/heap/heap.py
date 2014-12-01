@@ -71,7 +71,7 @@ class Heap:
             if ri <= self._size and elems[li] > elems[ri]:
                 j = ri
 
-            # parent is less than children then it's donw
+            # parent is less than children then it's done.
             if elems[i] <= elems[j]:
                 return
 
