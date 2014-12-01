@@ -19,19 +19,17 @@ def shortest(g, v1, v2):
 
     vid1, vid2 = getid(v1), getid(v2)
     visited = set()
-    found = False
     level = 0
     layer = [vid1]
 
-    while layer and (not found):
+    while layer:
         level += 1
 
         # check this layer
         for vid in layer:
             visited.add(vid)
             if g.adjacent(vid, vid2):
-                found = True
-                break
+                return level
 
         # goto next layer
         vids = []
@@ -39,9 +37,6 @@ def shortest(g, v1, v2):
             vids.extend(g.neighbors(v))
         vids = set(vids)
         layer = [vid for vid in vids if vid not in visited]
-
-    if found:
-        return level
 
     return None
 
