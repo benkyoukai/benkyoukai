@@ -2,18 +2,19 @@
 #
 # API
 #
-#   Heap([elem...]) -> Heap
-#   insert(elem)    -> Heap
-#   findmin(elem)   -> elem
-#   popmin(elem)    -> elem
-#   size()          -> int
-#   value()         -> list of elem
+#   Heap([elem...], compare=cmp) -> Heap
+#   insert(elem)                 -> Heap
+#   findmin(elem)                -> elem
+#   popmin(elem)                 -> elem
+#   size()                       -> int
+#   value()                      -> list of elem
 #
-# Element comparison uses the general comparison operators.
+# The return value of compare(v1, v2) should be greater than 0.
 class Heap:
-    def __init__(self, elems=[]):
+    def __init__(self, elems=[], cmp=cmp):
         self._elems = []
         self._size = 0
+        self.cmp = cmp
 
         for el in elems:
             self.insert(el)
@@ -50,7 +51,7 @@ class Heap:
         pi = (i-1) / 2
         elems = self._elems
 
-        while i != 0 and elems[pi] > elems[i]:
+        while i != 0 and self.cmp(elems[pi], elems[i]) > 0:
             # swap
             elems[pi], elems[i] = elems[i], elems[pi]
             i, pi = pi, (pi-1) / 2
@@ -68,11 +69,11 @@ class Heap:
             # default left child
             j = li
             # right child exists and less than the left child
-            if ri <= self._size and elems[li] > elems[ri]:
+            if ri < self._size and self.cmp(elems[li], elems[ri]) > 0:
                 j = ri
 
             # parent is less than children then it's done.
-            if elems[i] <= elems[j]:
+            if self.cmp(elems[j], elems[i]) > 0 :
                 return
 
             # swap
