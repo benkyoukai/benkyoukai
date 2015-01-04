@@ -10,14 +10,17 @@ class BST:
         self.Node = Node
         self.size = 1
 
+    # Value -> BST
     def insert(self, val):
         self._insert(self.root, self.Node(val))
         self.size += 1
         return self
 
+    # Value -> Node|None
     def find(self, val):
         return self._find(self.root, self.Node(val))
 
+    # Value -> Boolean
     def delete(self, val):
         #      meta
         #     /
@@ -35,6 +38,8 @@ class BST:
         return False
 
     # Recursive helper functions
+
+    # Node -> Node -> None
     def _insert(self, root, node):
         if node.less(root):
             if not root.left:
@@ -47,6 +52,7 @@ class BST:
             else:
                 self._insert(root.right, node)
 
+    # Node -> Node -> Node|None
     def _find(self, root, node):
         if root is None:
             return None
@@ -58,9 +64,10 @@ class BST:
         else:
             return root
 
+    # Node -> Node -> Node -> Boolean
     def _delete(self, parent, root, node):
         if root is None:
-            return None
+            return False
 
         if node.equal(root):
             if root.left and root.right:
