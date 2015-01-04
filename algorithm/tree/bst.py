@@ -69,7 +69,7 @@ class BST:
                 self._d1(parent, root)
             else:
                 self._d0(parent, root)
-                return True
+            return True
 
         return self._delete(root, root.left, node) or self._delete(root, root.right, node)
 
