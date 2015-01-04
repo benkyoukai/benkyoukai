@@ -58,16 +58,6 @@ class BST:
         else:
             return root
 
-    def _find_parent(self, parent, node):
-        if parent is None:
-            return None
-
-        if parent.left.equal(node) or parent.right.equal(node):
-            return parent
-
-        return self._find_parent(parent.left, node) or self._find_parent(parent.right, node)
-
-
     def _delete(self, parent, root, node):
         if root is None:
             return None
