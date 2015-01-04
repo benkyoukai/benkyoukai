@@ -89,10 +89,12 @@ class LRUCache:
     def remove(self, node):
         if node == self.head:
             self.head = node.next
-            self.head.prev = None
+            if self.head:
+                self.head.prev = None
         elif node == self.tail:
             self.tail = node.prev
-            self.tail.next = None
+            if self.tail:
+                self.tail.next = None
         else:
             n1 = node.prev
             n2 = node.next
